@@ -1,20 +1,28 @@
 package com.flowfact.hans.rest;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 @Path("/hello")
 public class HelloWorldService {
+	
+	ProspectService prospectService = new ProspectService();
 
 	@GET
-	@Path("/{param}")
-	public Response getMsg(@PathParam("param") String msg) {
+	@Path("/live")
+	public Response getMsg() {
 
-		String output = "Jersey say : " + msg;
-
-		return Response.status(200).entity(output).build();
+		ArrayList<Prospect> liveProspects;
+		try {
+			liveProspects = prospectService.getLiveProspects();
+			return Response.status(200).entity(liveProspects.toString()).build();
+		} catch (IOException e) {
+			return Response.status(500).entity("Sorry we couldn't get the Live Prospects").build();
+		}
 
 	}
 
