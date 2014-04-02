@@ -1,13 +1,19 @@
 package com.flowfact.hans.rest;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class ProspectService {
 	
 	public ArrayList<Prospect> getLiveProspects() throws IOException{
 		String currentLine;
-		ReadFile readFile = new ReadFile("C:\\Users\\ffmartinhans\\Desktop\\prospects.txt");
+		URL url = new URL("http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
+		URLConnection conn = url.openConnection();
+		BufferedReader readFile = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		ArrayList<Prospect> prospects = new ArrayList<Prospect>();
 		Crawler crawler = new Crawler();
 		ArrayList<Prospect> draftedProspects = crawler.getProspects();
