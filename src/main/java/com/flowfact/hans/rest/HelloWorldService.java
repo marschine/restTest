@@ -5,24 +5,24 @@ import java.util.ArrayList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 @Path("/hello")
 public class HelloWorldService {
-	
+
 	ProspectService prospectService = new ProspectService();
 
 	@GET
 	@Path("/live")
-	public Response getMsg() {
-
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Prospect> getMsg() throws IOException {
 		ArrayList<Prospect> liveProspects;
-		try {
-			liveProspects = prospectService.getLiveProspects();
-			return Response.status(200).entity(liveProspects.toString()).build();
-		} catch (IOException e) {
-			return Response.status(500).entity("Sorry we couldn't get the Live Prospects").build();
-		}
+		return prospectService.getLiveProspects();
+//		Track track = new Track();
+//		track.setTitle("Enter Sandman");
+//		track.setSinger("Metallica");
+//		return track;
 
 	}
 

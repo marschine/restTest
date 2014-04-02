@@ -1,5 +1,8 @@
 package com.flowfact.hans.rest;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Prospect {
 	private int rank;
 
