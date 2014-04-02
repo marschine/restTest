@@ -48,7 +48,7 @@
 				<configuration>
 					<url>http://marrrschine.de:8080/manager/text</url>
 					<server>tomcat</server>
-					<path>/*</path>
+					<path>/rest</path>
 				</configuration>
 			</plugin>
 			<!-- Maven compiler plugin -->

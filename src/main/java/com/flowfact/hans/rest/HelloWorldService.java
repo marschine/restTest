@@ -19,11 +19,6 @@ public class HelloWorldService {
 	public ArrayList<Prospect> getMsg() throws IOException {
 		ArrayList<Prospect> liveProspects;
 		return prospectService.getLiveProspects();
-//		Track track = new Track();
-//		track.setTitle("Enter Sandman");
-//		track.setSinger("Metallica");
-//		return track;
-
 	}
 
 }
