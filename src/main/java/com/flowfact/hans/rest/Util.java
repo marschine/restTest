@@ -11,7 +11,7 @@ public class Util {
 	}
 
 	public static Prospect createProspect(String[] el) {
-		int rank = Integer.parseInt(el[0]);
+		String rank = el[0];
 		String name;
 		if (el[1].contains("*")) {
 			name = el[1].substring(1);
@@ -19,11 +19,11 @@ public class Util {
 			name = el[1];
 		}
 		String pos = el[2];
-		int posRank = Integer.parseInt(el[3]);
+		String posRank = el[3];
 		String school = el[4];
 		String year = el[5];
 		String height = el[6];
-		int weight = Integer.parseInt(el[7]);
+		String weight = el[7];
 		Prospect currentProspect = new Prospect(rank, name, pos, posRank, school, year, height, weight);
 		if (el[8] != "--") {
 			String proj = el[8];

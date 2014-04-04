@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Prospect {
-	private int rank;
+	private String rank;
 
 	private String firstname;
 
@@ -12,7 +12,7 @@ public class Prospect {
 
 	private String pos;
 
-	private int posRank;
+	private String posRank;
 
 	private String school;
 
@@ -20,12 +20,12 @@ public class Prospect {
 
 	private String height;
 
-	private int weight;
+	private String weight;
 
 	private String projRnd;
 
-	public Prospect(int rank, String name, String pos, int posRank, String school, String classYear, String height,
-			int weight) {
+	public Prospect(String rank, String name, String pos, String posRank, String school, String classYear, String height,
+			String weight) {
 		super();
 		this.rank = rank;
 		this.firstname = name.split(" ")[0];
@@ -44,12 +44,28 @@ public class Prospect {
 		this.lastname = lastname;
 	}
 
-	public int getRank() {
+	public String getRank() {
 		return rank;
 	}
 
-	public void setRank(int rank) {
+	public void setRank(String rank) {
 		this.rank = rank;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getPos() {
@@ -60,11 +76,11 @@ public class Prospect {
 		this.pos = pos;
 	}
 
-	public int getPosRank() {
+	public String getPosRank() {
 		return posRank;
 	}
 
-	public void setPosRank(int posRank) {
+	public void setPosRank(String posRank) {
 		this.posRank = posRank;
 	}
 
@@ -92,11 +108,11 @@ public class Prospect {
 		this.height = height;
 	}
 
-	public int getWeight() {
+	public String getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 
@@ -108,29 +124,6 @@ public class Prospect {
 		this.projRnd = projRnd;
 	}
 
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	@Override
-	public String toString() {
-		return "Prospect [rank=" + rank + ", firstname=" + firstname + ", lastname=" + lastname + ", pos=" + pos
-				+ ", posRank=" + posRank + ", school=" + school + ", classYear=" + classYear + ", height=" + height
-				+ ", weight=" + weight + ", projRnd=" + projRnd + "]" + "\n";
-	}
-
 	public boolean equals(Prospect other) {
 		if ((this.lastname.equalsIgnoreCase(other.lastname)) && (this.firstname.equalsIgnoreCase(other.firstname))) {
 			return true;
@@ -138,4 +131,12 @@ public class Prospect {
 			return false;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Prospect [rank=" + rank + ", firstname=" + firstname + ", lastname=" + lastname + ", pos=" + pos
+				+ ", posRank=" + posRank + ", school=" + school + ", classYear=" + classYear + ", height=" + height
+				+ ", weight=" + weight + ", projRnd=" + projRnd + "]";
+	}
+
 }
