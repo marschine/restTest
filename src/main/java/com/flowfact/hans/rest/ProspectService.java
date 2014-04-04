@@ -18,6 +18,7 @@ public class ProspectService {
 		ProspectList prospectList = new ProspectList();
 		Crawler crawler = new Crawler();
 		List<Prospect> draftedProspects = crawler.getProspects();
+		int j = 0;
 		while ((currentLine = readFile.readLine()) != null) {
 			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
 			String[] el = changedLine.split(";");
@@ -31,9 +32,11 @@ public class ProspectService {
 			if (addable){
 				prospectList.addProspect(currentProspect);
 			}
-			System.out.println(currentProspect);
+			j++;
+			if (j > 100){
+				break;
+			}
 		}
-		System.out.println("before you return ....");
 		return prospectList;
 	}
 
