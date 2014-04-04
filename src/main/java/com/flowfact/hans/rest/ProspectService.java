@@ -31,7 +31,9 @@ public class ProspectService {
 			if (addable){
 				prospectList.addProspect(currentProspect);
 			}
+			System.out.println(currentProspect);
 		}
+		System.out.println("before you return ....");
 		return prospectList;
 	}
 

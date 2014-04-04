@@ -1,7 +1,6 @@
 package com.flowfact.hans.rest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -44,6 +44,62 @@ public class Prospect {
 		this.lastname = lastname;
 	}
 
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+	public String getPos() {
+		return pos;
+	}
+
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
+
+	public int getPosRank() {
+		return posRank;
+	}
+
+	public void setPosRank(int posRank) {
+		this.posRank = posRank;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public void setSchool(String school) {
+		this.school = school;
+	}
+
+	public String getClassYear() {
+		return classYear;
+	}
+
+	public void setClassYear(String classYear) {
+		this.classYear = classYear;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	public String getProjRnd() {
 		return projRnd;
 	}
@@ -82,20 +138,4 @@ public class Prospect {
 			return false;
 		}
 	}
-
-	// public BasicDBObject getPersistenceDocument(){
-	// BasicDBObject document = new BasicDBObject();
-	// document.put("rank", Integer.toString((this.rank)));
-	// document.put("firstname", this.firstname);
-	// document.put("lastname", this.lastname);
-	// document.put("pos", this.pos);
-	// document.put("posRank", this.posRank);
-	// document.put("school", this.school);
-	// document.put("classYear", this.classYear);
-	// document.put("height", this.height);
-	// document.put("weight", Integer.toString((this.weight)));
-	// document.put("projRnd", this.projRnd);
-	// return document;
-	// }
-
 }
