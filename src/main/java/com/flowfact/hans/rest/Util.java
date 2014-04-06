@@ -24,7 +24,8 @@ public class Util {
 		String year = el[5];
 		String height = el[6];
 		String weight = el[7];
-		Prospect currentProspect = new Prospect(rank, name, pos, posRank, school, year, height, weight);
+		Prospect currentProspect = new Prospect(rank, name, pos, posRank,
+				school, year, height, weight);
 		if (el[8] != "--") {
 			String proj = el[8];
 			currentProspect.setProjRnd(proj);

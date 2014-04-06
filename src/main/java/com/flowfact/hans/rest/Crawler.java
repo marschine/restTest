@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Crawler {
-	private String url = new String("http://nfl-talk.net/forum/showpost.php" + "?" + "p=1255579&postcount=1");
+	private String url = new String("http://nfl-talk.net/forum/showpost.php?p=1329050&postcount=1");
 
 	public ArrayList<Prospect> getProspects() throws IOException{
 		Document doc = Jsoup.connect(url).get();
@@ -22,5 +22,12 @@ public class Crawler {
 			draftedProspects.add(new Prospect(firstname, lastname));
 		}
 		return draftedProspects;
+	}
+
+	public String getOTC() throws IOException {
+		Document doc = Jsoup.connect(url).get();
+		Elements otcElement = doc.select("font[color=red]");
+		String otc = otcElement.text();
+		return otc;
 	}
 }

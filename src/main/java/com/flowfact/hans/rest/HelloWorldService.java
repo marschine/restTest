@@ -19,4 +19,11 @@ public class HelloWorldService {
 		return prospectService.getLiveProspects();
 	}
 
+	@GET
+	@Path("/otc")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getOtc() throws IOException {
+		return prospectService.getOtc();
+	}
+
 }
