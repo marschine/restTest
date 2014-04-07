@@ -103,13 +103,13 @@ public class ProspectService {
 		Mongo mongo = new Mongo();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
-	
+		this.setTaken();
 		// look for entries untaken
 		Query query = ds.createQuery(Prospect.class).field("taken")
 				.equal(false);
 		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
 				.asList();
-		ProspectList prospectList = new ProspectList(prospectListRaw);
+		ProspectList prospectList = new ProspectList(prospectListRaw.subList(0, 100));
 		return prospectList;
 	}
 }

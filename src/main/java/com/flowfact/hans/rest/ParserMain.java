@@ -18,10 +18,10 @@ import com.mongodb.Mongo;
 public class ParserMain {
 
 	public static void main(String... aArgs) throws IOException {
-		Mongo mongo = new Mongo();
-		Morphia morphia = new Morphia();
-		Datastore ds = morphia.createDatastore(mongo, "dbTest");
-		morphia.map(Prospect.class);
+//		Mongo mongo = new Mongo();
+//		Morphia morphia = new Morphia();
+//		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+//		morphia.map(Prospect.class);
 
 		// create all objects
 //		URL url = new URL(
@@ -58,6 +58,9 @@ public class ParserMain {
 //				.asList();
 //		ProspectList prospectList2 = new ProspectList(prospectListRaw);
 //		System.out.println(prospectList2);
+		
+		ProspectService prospectService = new ProspectService();
+		System.out.println(prospectService.getNewLiveProspects());
 
 	}
 }
