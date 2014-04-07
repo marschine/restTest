@@ -1,5 +1,6 @@
 package com.flowfact.hans.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class ProspectList {
 
 	public ProspectList() {
 		super();
+		this.prospectList = new ArrayList<Prospect>();
 	}
 
 	public ProspectList(List<Prospect> prospectList) {

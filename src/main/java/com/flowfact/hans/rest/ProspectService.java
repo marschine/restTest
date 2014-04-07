@@ -41,6 +41,7 @@ public class ProspectService {
 				}
 			}
 			if (addable) {
+				System.out.println(currentProspect);
 				prospectList.addProspect(currentProspect);
 				j++;
 			}
