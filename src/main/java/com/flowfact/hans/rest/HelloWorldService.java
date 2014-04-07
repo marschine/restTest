@@ -30,8 +30,7 @@ public class HelloWorldService {
 	@Path("/reset")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProspectList getNewLive() throws IOException {
-		return null;
-//		return prospectService.getNewLiveProspects();
+		return prospectService.getNewLiveProspects();
 	}
 
 	@GET

@@ -21,14 +21,24 @@ public class ParserMain {
 		Mongo mongo = new Mongo();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+		morphia.map(Prospect.class);
 
-		//look for entries untaken
-		Query query = ds.createQuery(Prospect.class).field("taken").equal(false);
-		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query.asList();
-		ProspectList prospectList = new ProspectList(prospectListRaw);
-		System.out.println(prospectList);
-		
-		//set taken
+		// create all objects
+		URL url = new URL(
+				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
+		String currentLine;
+		URLConnection conn = url.openConnection();
+		BufferedReader readFile = new BufferedReader(new InputStreamReader(
+				conn.getInputStream()));
+		ProspectList prospectList = new ProspectList();
+		while ((currentLine = readFile.readLine()) != null) {
+			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
+			String[] el = changedLine.split(";");
+			Prospect currentProspect = Util.createProspect(el);
+			ds.save(currentProspect);
+		}
+
+		// set taken
 //		Crawler crawler = new Crawler();
 //		List<Prospect> draftedProspects = crawler.getProspects();
 //		for (Prospect prospect : draftedProspects) {
@@ -36,26 +46,19 @@ public class ParserMain {
 //			String lastname = prospect.getLastname();
 //			Query query = ds.createQuery(Prospect.class).field("lastname")
 //					.equal(lastname).field("firstname").equal(firstname);
-//			UpdateOperations ops = ds.createUpdateOperations(Prospect.class).set("taken", true);
+//			UpdateOperations ops = ds.createUpdateOperations(Prospect.class)
+//					.set("taken", true);
 //			ds.update(query, ops);
 //		}
 
-		// create all objects
-		// URL url = new URL(
-		// "http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
-		// String currentLine;
-		// URLConnection conn = url.openConnection();
-		// BufferedReader readFile = new BufferedReader(new InputStreamReader(
-		// conn.getInputStream()));
-		// ProspectList prospectList = new ProspectList();
-		// while ((currentLine = readFile.readLine()) != null) {
-		// String changedLine = currentLine.replaceAll("\\t+", ";").trim();
-		// String[] el = changedLine.split(";");
-		// Prospect currentProspect = Util.createProspect(el);
-		// ds.save(currentProspect);
-		// }
+		// look for entries untaken
+//		Query query = ds.createQuery(Prospect.class).field("taken")
+//				.equal(false);
+//		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
+//				.asList();
+//		ProspectList prospectList2 = new ProspectList(prospectListRaw);
+//		System.out.println(prospectList2);
 
-		// set taken ones
 
 	}
 }

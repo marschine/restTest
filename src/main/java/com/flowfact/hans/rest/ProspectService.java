@@ -67,7 +67,8 @@ public class ProspectService {
 			String firstname = prospect.getFirstname();
 			String lastname = prospect.getLastname();
 			Query query = ds.createQuery(Prospect.class).field("lastname")
-					.equal(lastname).field("firstname").equal(firstname);
+					.equal(lastname);
+			query.field("firstname").equal(firstname);
 			UpdateOperations ops = ds.createUpdateOperations(Prospect.class)
 					.set("taken", true);
 			ds.update(query, ops);
@@ -109,7 +110,6 @@ public class ProspectService {
 		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
 				.asList();
 		ProspectList prospectList = new ProspectList(prospectListRaw);
-
 		return prospectList;
 	}
 }
