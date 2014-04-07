@@ -45,4 +45,8 @@ public class ProspectService {
 	public String getOtc() throws IOException{
 		return crawler.getOTC();
 	}
+
+	public ProspectList getNewLiveProspects() {
+		return null;
+	}
 }
