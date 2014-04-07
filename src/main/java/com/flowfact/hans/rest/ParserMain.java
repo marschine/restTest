@@ -24,19 +24,20 @@ public class ParserMain {
 		morphia.map(Prospect.class);
 
 		// create all objects
-		URL url = new URL(
-				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
-		String currentLine;
-		URLConnection conn = url.openConnection();
-		BufferedReader readFile = new BufferedReader(new InputStreamReader(
-				conn.getInputStream()));
-		ProspectList prospectList = new ProspectList();
-		while ((currentLine = readFile.readLine()) != null) {
-			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
-			String[] el = changedLine.split(";");
-			Prospect currentProspect = Util.createProspect(el);
-			ds.save(currentProspect);
-		}
+//		URL url = new URL(
+//				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
+//		String currentLine;
+//		URLConnection conn = url.openConnection();
+//		BufferedReader readFile = new BufferedReader(new InputStreamReader(
+//				conn.getInputStream()));
+//		ProspectList prospectList = new ProspectList();
+//		while ((currentLine = readFile.readLine()) != null) {
+//			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
+//			String[] el = changedLine.split(";");
+//			Prospect currentProspect = Util.createProspect(el);
+//			System.out.println(currentProspect);
+//			ds.save(currentProspect);
+//		}
 
 		// set taken
 //		Crawler crawler = new Crawler();
@@ -57,8 +58,8 @@ public class ParserMain {
 //		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
 //				.asList();
 //		ProspectList prospectList2 = new ProspectList(prospectListRaw);
+//		prospectList2.getProspectList().get(1);
 //		System.out.println(prospectList2);
-
 
 	}
 }
