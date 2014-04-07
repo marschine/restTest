@@ -35,6 +35,10 @@ public class Prospect {
 
 	private boolean taken = false;
 
+	public Prospect() {
+		super();
+	}
+
 	public Prospect(String rank, String name, String pos, String posRank,
 			String school, String classYear, String height, String weight) {
 		super();

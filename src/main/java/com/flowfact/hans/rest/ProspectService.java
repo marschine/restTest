@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
@@ -97,7 +98,18 @@ public class ProspectService {
 		return true;
 	}
 
-	public ProspectList getNewLiveProspects() {
-		return null;
+	public ProspectList getNewLiveProspects() throws UnknownHostException {
+		Mongo mongo = new Mongo();
+		Morphia morphia = new Morphia();
+		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+
+		// look for entries untaken
+		Query query = ds.createQuery(Prospect.class).field("taken")
+				.equal(false);
+		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
+				.asList();
+		ProspectList prospectList = new ProspectList(prospectListRaw);
+
+		return prospectList;
 	}
 }
