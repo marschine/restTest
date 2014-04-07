@@ -16,7 +16,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
@@ -28,9 +27,19 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>1.8</version>
+		</dependency>
 	</dependencies>
 	<build>
-		<finalName>restTest</finalName>
+		<finalName>frontend</finalName>
 		<plugins>
 			<!-- Maven Tomcat Plugin -->
 			<plugin>
@@ -39,7 +48,7 @@
 				<configuration>
 					<url>http://marrrschine.de:8080/manager/text</url>
 					<server>tomcat</server>
-					<path>/webapp</path>
+					<path>/rest</path>
 				</configuration>
 			</plugin>
 			<!-- Maven compiler plugin -->
