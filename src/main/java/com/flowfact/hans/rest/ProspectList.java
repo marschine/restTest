@@ -29,4 +29,10 @@ public class ProspectList {
 	public void addProspect(Prospect prospect){
 		this.prospectList.add(prospect);
 	}
+
+	@Override
+	public String toString() {
+		return "ProspectList [prospectList=" + prospectList + "]";
+	}
+	
 }

@@ -3,9 +3,20 @@ package com.flowfact.hans.rest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
+
+import com.mongodb.Mongo;
 
 public class ProspectService {
 
@@ -42,7 +53,42 @@ public class ProspectService {
 		return prospectList;
 	}
 
-	public String getOtc() throws IOException{
+	public String getOtc() throws IOException {
 		return crawler.getOTC();
+	}
+
+	public void resetDB() throws IOException {
+		Morphia morphia = new Morphia();
+		morphia.map(Prospect.class);
+		Mongo mongo = new Mongo();
+		Datastore datastore = morphia.createDatastore(mongo, "dbTest");
+		morphia.mapPackage("org.mongodb.morphia.entity");
+		URL url = new URL(
+				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
+		String currentLine;
+		URLConnection conn = url.openConnection();
+		BufferedReader readFile = new BufferedReader(new InputStreamReader(
+				conn.getInputStream()));
+		while ((currentLine = readFile.readLine()) != null) {
+			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
+			String[] el = changedLine.split(";");
+			Prospect currentProspect = Util.createProspect(el);
+			datastore.save(currentProspect);
+		}
+
+	}
+
+	public ProspectList getNewLive() throws UnknownHostException {
+		Morphia morphia = new Morphia();
+		morphia.map(Prospect.class);
+		Mongo mongo = new Mongo();
+		Datastore datastore = morphia.createDatastore(mongo, "dbTest");
+		morphia.mapPackage("org.mongodb.morphia.entity");
+		Query q = datastore.createQuery(Prospect.class).field("taken")
+				.equal(false);
+		ArrayList entities = (ArrayList) q.asList();
+		ProspectList prospects = new ProspectList(entities);
+		System.out.println(prospects);
+		return prospects;
 	}
 }

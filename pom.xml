@@ -21,6 +21,13 @@
 			<artifactId>jersey-server</artifactId>
 			<version>1.8</version>
 		</dependency>
+		<!-- New Dependency -->
+		<dependency>
+			<groupId>org.mongodb.morphia</groupId>
+			<artifactId>morphia</artifactId>
+			<version>0.107</version>
+		</dependency>
+		<!-- New Dep End -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

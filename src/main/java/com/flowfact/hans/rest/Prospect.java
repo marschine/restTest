@@ -2,8 +2,17 @@ package com.flowfact.hans.rest;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+
 @XmlRootElement
+@Entity
 public class Prospect {
+
+	@Id
+	ObjectId id;
+
 	private String rank;
 
 	private String firstname;
@@ -24,8 +33,14 @@ public class Prospect {
 
 	private String projRnd;
 
-	public Prospect(String rank, String name, String pos, String posRank, String school, String classYear, String height,
-			String weight) {
+	private boolean taken = false;
+
+	public Prospect() {
+		super();
+	}
+
+	public Prospect(String rank, String name, String pos, String posRank,
+			String school, String classYear, String height, String weight) {
 		super();
 		this.rank = rank;
 		this.firstname = name.split(" ")[0];
@@ -42,6 +57,14 @@ public class Prospect {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
+	}
+
+	public boolean isTaken() {
+		return taken;
+	}
+
+	public void setTaken(boolean taken) {
+		this.taken = taken;
 	}
 
 	public String getRank() {
@@ -125,7 +148,8 @@ public class Prospect {
 	}
 
 	public boolean equals(Prospect other) {
-		if ((this.lastname.equalsIgnoreCase(other.lastname)) && (this.firstname.equalsIgnoreCase(other.firstname))) {
+		if ((this.lastname.equalsIgnoreCase(other.lastname))
+				&& (this.firstname.equalsIgnoreCase(other.firstname))) {
 			return true;
 		} else {
 			return false;
@@ -134,8 +158,10 @@ public class Prospect {
 
 	@Override
 	public String toString() {
-		return "Prospect [rank=" + rank + ", firstname=" + firstname + ", lastname=" + lastname + ", pos=" + pos
-				+ ", posRank=" + posRank + ", school=" + school + ", classYear=" + classYear + ", height=" + height
+		return "Prospect [rank=" + rank + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", Taken= " + taken + ", pos="
+				+ pos + ", posRank=" + posRank + ", school=" + school
+				+ ", classYear=" + classYear + ", height=" + height
 				+ ", weight=" + weight + ", projRnd=" + projRnd + "]";
 	}
 
