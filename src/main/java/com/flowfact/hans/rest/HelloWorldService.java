@@ -19,11 +19,24 @@ public class HelloWorldService {
 		return prospectService.getLiveProspects();
 	}
 
+//	@GET
+//	@Path("/newlive")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public ProspectList getLive() throws IOException {
+//		return prospectService.getNewLive();
+//	}
+
 	@GET
 	@Path("/otc")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getOtc() throws IOException {
 		return prospectService.getOtc();
 	}
+
+//	@GET
+//	@Path("/reset")
+//	public void resetDB() throws IOException {
+//		prospectService.resetDB();
+//	}
 
 }
