@@ -13,7 +13,7 @@ public class Prospect {
 	@Id
 	ObjectId id;
 
-	private String rank;
+	private int rank;
 
 	private String firstname;
 
@@ -21,7 +21,7 @@ public class Prospect {
 
 	private String pos;
 
-	private String posRank;
+	private int posRank;
 
 	private String school;
 
@@ -39,7 +39,7 @@ public class Prospect {
 		super();
 	}
 
-	public Prospect(String rank, String name, String pos, String posRank,
+	public Prospect(int rank, String name, String pos, int posRank,
 			String school, String classYear, String height, String weight) {
 		super();
 		this.rank = rank;
@@ -67,11 +67,11 @@ public class Prospect {
 		this.id = id;
 	}
 
-	public String getRank() {
+	public int getRank() {
 		return rank;
 	}
 
-	public void setRank(String rank) {
+	public void setRank(int rank) {
 		this.rank = rank;
 	}
 
@@ -99,11 +99,11 @@ public class Prospect {
 		this.pos = pos;
 	}
 
-	public String getPosRank() {
+	public int getPosRank() {
 		return posRank;
 	}
 
-	public void setPosRank(String posRank) {
+	public void setPosRank(int posRank) {
 		this.posRank = posRank;
 	}
 

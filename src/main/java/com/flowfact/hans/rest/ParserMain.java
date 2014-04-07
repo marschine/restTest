@@ -35,7 +35,6 @@ public class ParserMain {
 //			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
 //			String[] el = changedLine.split(";");
 //			Prospect currentProspect = Util.createProspect(el);
-//			System.out.println(currentProspect);
 //			ds.save(currentProspect);
 //		}
 
@@ -58,7 +57,6 @@ public class ParserMain {
 //		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
 //				.asList();
 //		ProspectList prospectList2 = new ProspectList(prospectListRaw);
-//		prospectList2.getProspectList().get(1);
 //		System.out.println(prospectList2);
 
 	}

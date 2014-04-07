@@ -99,11 +99,13 @@ public class ProspectService {
 		return true;
 	}
 
-	public ProspectList getNewLiveProspects() throws UnknownHostException {
+	public ProspectList getNewLiveProspects() throws IOException {
 		Mongo mongo = new Mongo();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
-
+		
+		this.reset();
+		this.setTaken();
 		// look for entries untaken
 		Query query = ds.createQuery(Prospect.class).field("taken")
 				.equal(false);
