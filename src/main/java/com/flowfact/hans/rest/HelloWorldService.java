@@ -27,6 +27,14 @@ public class HelloWorldService {
 	}
 
 	@GET
+	@Path("/reset")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ProspectList getNewLive() throws IOException {
+		return null;
+//		return prospectService.getNewLiveProspects();
+	}
+
+	@GET
 	@Path("/otc")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getOtc() throws IOException {
