@@ -69,6 +69,7 @@ public class ProspectService {
 			Query query = ds.createQuery(Prospect.class).field("lastname")
 					.equal(lastname);
 			query.field("firstname").equal(firstname);
+			System.out.println(lastname);
 			UpdateOperations ops = ds.createUpdateOperations(Prospect.class)
 					.set("taken", true);
 			ds.update(query, ops);
