@@ -1,17 +1,19 @@
 package com.flowfact.hans.rest;
 
+import java.util.Arrays;
+
 public class Util {
 	public static String prepareThreadElements(String currentElement) {
-		String[] newString = currentElement.split("-");
+		String[] newString = currentElement.split("-",1);
 		if (newString[0].equals(currentElement)) {
-			newString = currentElement.split("–");
+			newString = currentElement.split("–",1);
 		}
 		String name = newString[0].split(",")[0].trim();
 		return name;
 	}
 
 	public static Prospect createProspect(String[] el) {
-		String rank = el[0];
+		int rank = Integer.parseInt(el[0]);
 		String name;
 		if (el[1].contains("*")) {
 			name = el[1].substring(1);
@@ -19,7 +21,7 @@ public class Util {
 			name = el[1];
 		}
 		String pos = el[2];
-		String posRank = el[3];
+		int posRank = Integer.parseInt(el[3]);
 		String school = el[4];
 		String year = el[5];
 		String height = el[6];

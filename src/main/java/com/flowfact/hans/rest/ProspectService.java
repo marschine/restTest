@@ -5,7 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
+
+import com.mongodb.Mongo;
 
 public class ProspectService {
 
@@ -32,6 +41,7 @@ public class ProspectService {
 				}
 			}
 			if (addable) {
+				System.out.println(currentProspect);
 				prospectList.addProspect(currentProspect);
 				j++;
 			}
@@ -46,38 +56,62 @@ public class ProspectService {
 		return crawler.getOTC();
 	}
 
-//	public void resetDB() throws IOException {
-//		Morphia morphia = new Morphia();
-//		morphia.map(Prospect.class);
-//		Mongo mongo = new Mongo();
-//		Datastore datastore = morphia.createDatastore(mongo, "dbTest");
-//		morphia.mapPackage("org.mongodb.morphia.entity");
-//		URL url = new URL(
-//				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
-//		String currentLine;
-//		URLConnection conn = url.openConnection();
-//		BufferedReader readFile = new BufferedReader(new InputStreamReader(
-//				conn.getInputStream()));
-//		while ((currentLine = readFile.readLine()) != null) {
-//			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
-//			String[] el = changedLine.split(";");
-//			Prospect currentProspect = Util.createProspect(el);
-//			datastore.save(currentProspect);
-//		}
-//
-//	}
+	public boolean setTaken() throws IOException {
+		Mongo mongo = new Mongo();
+		Morphia morphia = new Morphia();
+		Datastore ds = morphia.createDatastore(mongo, "dbTest");
 
-//	public ProspectList getNewLive() throws UnknownHostException {
-//		Morphia morphia = new Morphia();
-//		morphia.map(Prospect.class);
-//		Mongo mongo = new Mongo();
-//		Datastore datastore = morphia.createDatastore(mongo, "dbTest");
-//		morphia.mapPackage("org.mongodb.morphia.entity");
-//		Query q = datastore.createQuery(Prospect.class).field("taken")
-//				.equal(false);
-//		ArrayList entities = (ArrayList) q.asList();
-//		ProspectList prospects = new ProspectList(entities);
-//		System.out.println(prospects);
-//		return prospects;
-//	}
+		// set taken
+		Crawler crawler = new Crawler();
+		List<Prospect> draftedProspects = crawler.getProspects();
+		for (Prospect prospect : draftedProspects) {
+			String firstname = prospect.getFirstname();
+			String lastname = prospect.getLastname();
+			Query query = ds.createQuery(Prospect.class).field("lastname")
+					.equal(lastname);
+			query.field("firstname").equal(firstname);
+			System.out.println(lastname);
+			UpdateOperations ops = ds.createUpdateOperations(Prospect.class)
+					.set("taken", true);
+			ds.update(query, ops);
+		}
+		return true;
+	}
+
+	public boolean reset() throws IOException {
+		// return true only if success
+		Mongo mongo = new Mongo();
+		Morphia morphia = new Morphia();
+		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+
+		// create all objects
+		URL url = new URL(
+				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
+		String currentLine;
+		URLConnection conn = url.openConnection();
+		BufferedReader readFile = new BufferedReader(new InputStreamReader(
+				conn.getInputStream()));
+		ProspectList prospectList = new ProspectList();
+		while ((currentLine = readFile.readLine()) != null) {
+			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
+			String[] el = changedLine.split(";");
+			Prospect currentProspect = Util.createProspect(el);
+			ds.save(currentProspect);
+		}
+		return true;
+	}
+
+	public ProspectList getNewLiveProspects() throws IOException {
+		Mongo mongo = new Mongo();
+		Morphia morphia = new Morphia();
+		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+		this.setTaken();
+		// look for entries untaken
+		Query query = ds.createQuery(Prospect.class).field("taken")
+				.equal(false);
+		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
+				.asList();
+		ProspectList prospectList = new ProspectList(prospectListRaw.subList(0, 100));
+		return prospectList;
+	}
 }
