@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,22 +14,22 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 
 public class ProspectService {
 
 	Crawler crawler = new Crawler();
 
 	public ProspectList getLiveProspects() throws Exception {
-		Mongo mongo = new Mongo();
+		Mongo mongo = new MongoClient();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
 		this.setTaken();
 		// look for entries untaken
-		Query query = ds.createQuery(Prospect.class).field("taken")
-				.equal(false);
+		Query<Prospect> query = ds.createQuery(Prospect.class);
 		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
 				.asList();
-		ProspectList prospectList = new ProspectList();
+		ProspectList prospectList = new ProspectList(prospectListRaw);
 		return prospectList;
 	}
 
@@ -39,7 +38,7 @@ public class ProspectService {
 	}
 
 	public boolean setTaken() throws Exception {
-		Mongo mongo = new Mongo();
+		Mongo mongo = new MongoClient();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
 		Crawler crawler = new Crawler();
@@ -48,11 +47,11 @@ public class ProspectService {
 			String firstname = prospect.getFirstname();
 			String lastname = prospect.getLastname();
 			String team = prospect.getTeam();
-			Query query = ds.createQuery(Prospect.class).field("lastname")
+			Query<Prospect> query = ds.createQuery(Prospect.class).field("lastname")
 					.equal(lastname);
 			query.field("firstname").equal(firstname);
 			System.out.println(lastname);
-			UpdateOperations ops = ds.createUpdateOperations(Prospect.class)
+			UpdateOperations<Prospect> ops = ds.createUpdateOperations(Prospect.class)
 					.set("taken", true);
 			ds.update(query, ops);
 			ops = ds.createUpdateOperations(Prospect.class)
@@ -64,7 +63,7 @@ public class ProspectService {
 
 	public boolean reset() throws IOException {
 		// return true only if success
-		Mongo mongo = new Mongo();
+		Mongo mongo = new MongoClient();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
 
@@ -75,7 +74,7 @@ public class ProspectService {
 		URLConnection conn = url.openConnection();
 		BufferedReader readFile = new BufferedReader(new InputStreamReader(
 				conn.getInputStream()));
-		ProspectList prospectList = new ProspectList();
+//		ProspectList prospectList = new ProspectList();
 		while ((currentLine = readFile.readLine()) != null) {
 			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
 			String[] el = changedLine.split(";");
@@ -86,12 +85,12 @@ public class ProspectService {
 	}
 
 	public ProspectList getNewLiveProspects() throws Exception {
-		Mongo mongo = new Mongo();
+		Mongo mongo = new MongoClient();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
 		this.setTaken();
 		// look for entries untaken
-		Query query = ds.createQuery(Prospect.class).field("taken")
+		Query<Prospect> query = ds.createQuery(Prospect.class).field("taken")
 				.equal(false);
 		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
 				.asList();

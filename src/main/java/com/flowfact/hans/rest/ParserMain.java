@@ -47,8 +47,9 @@ public class ParserMain {
 		// .asList();
 		// ProspectList prospectList2 = new ProspectList(prospectListRaw);
 		// System.out.println(prospectList2);
-		Crawler crawler = new Crawler();
-		System.out.println(crawler.getSelections().toString());
+
+//		Crawler crawler = new Crawler();
+//		System.out.println(crawler.getSelections().toString());
 
 	}
 }

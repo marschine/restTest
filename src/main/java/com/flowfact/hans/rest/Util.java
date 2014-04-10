@@ -1,6 +1,5 @@
 package com.flowfact.hans.rest;
 
-import java.util.Arrays;
 
 public class Util {
 	public static String prepareThreadElements(String currentElement) {

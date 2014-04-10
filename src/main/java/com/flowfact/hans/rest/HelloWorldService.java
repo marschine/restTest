@@ -19,17 +19,10 @@ public class HelloWorldService {
 		return prospectService.getLiveProspects();
 	}
 
-//	@GET
-//	@Path("/newlive")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public ProspectList getLive() throws IOException {
-//		return prospectService.getNewLive();
-//	}
-
 	@GET
 	@Path("/newlive")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ProspectList getLive() throws IOException {
+	public ProspectList getLive() throws Exception {
 		return prospectService.getNewLiveProspects();
 	}
 
