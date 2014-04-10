@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class ParserMain {
 
-	public static void main(String... aArgs) throws IOException {
+	public static void main(String... aArgs) throws Exception {
 		// Mongo mongo = new Mongo();
 		// Morphia morphia = new Morphia();
 		// Datastore ds = morphia.createDatastore(mongo, "dbTest");
@@ -47,10 +47,8 @@ public class ParserMain {
 		// .asList();
 		// ProspectList prospectList2 = new ProspectList(prospectListRaw);
 		// System.out.println(prospectList2);
-
-		ProspectService prospectService = new ProspectService();
-		System.out.println(prospectService.getLiveProspects());
-
+		Crawler crawler = new Crawler();
+		System.out.println(crawler.getSelections().toString());
 
 	}
 }

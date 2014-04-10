@@ -20,35 +20,17 @@ public class ProspectService {
 
 	Crawler crawler = new Crawler();
 
-	public ProspectList getLiveProspects() throws IOException {
-		URL url = new URL(
-				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
-		String currentLine;
-		URLConnection conn = url.openConnection();
-		BufferedReader readFile = new BufferedReader(new InputStreamReader(
-				conn.getInputStream()));
+	public ProspectList getLiveProspects() throws Exception {
+		Mongo mongo = new Mongo();
+		Morphia morphia = new Morphia();
+		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+		this.setTaken();
+		// look for entries untaken
+		Query query = ds.createQuery(Prospect.class).field("taken")
+				.equal(false);
+		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
+				.asList();
 		ProspectList prospectList = new ProspectList();
-		List<Prospect> draftedProspects = crawler.getProspects();
-		int j = 0;
-		while ((currentLine = readFile.readLine()) != null) {
-			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
-			String[] el = changedLine.split(";");
-			Prospect currentProspect = Util.createProspect(el);
-			boolean addable = true;
-			for (int i = 0; i < draftedProspects.size(); i++) {
-				if (draftedProspects.get(i).equals(currentProspect)) {
-					addable = false;
-				}
-			}
-			if (addable) {
-				System.out.println(currentProspect);
-				prospectList.addProspect(currentProspect);
-				j++;
-			}
-			if (j > 100) {
-				break;
-			}
-		}
 		return prospectList;
 	}
 
@@ -56,23 +38,25 @@ public class ProspectService {
 		return crawler.getOTC();
 	}
 
-	public boolean setTaken() throws IOException {
+	public boolean setTaken() throws Exception {
 		Mongo mongo = new Mongo();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");
-
-		// set taken
 		Crawler crawler = new Crawler();
-		List<Prospect> draftedProspects = crawler.getProspects();
+		List<Prospect> draftedProspects = crawler.getSelections();
 		for (Prospect prospect : draftedProspects) {
 			String firstname = prospect.getFirstname();
 			String lastname = prospect.getLastname();
+			String team = prospect.getTeam();
 			Query query = ds.createQuery(Prospect.class).field("lastname")
 					.equal(lastname);
 			query.field("firstname").equal(firstname);
 			System.out.println(lastname);
 			UpdateOperations ops = ds.createUpdateOperations(Prospect.class)
 					.set("taken", true);
+			ds.update(query, ops);
+			ops = ds.createUpdateOperations(Prospect.class)
+					.set("team", team);
 			ds.update(query, ops);
 		}
 		return true;
@@ -101,7 +85,7 @@ public class ProspectService {
 		return true;
 	}
 
-	public ProspectList getNewLiveProspects() throws IOException {
+	public ProspectList getNewLiveProspects() throws Exception {
 		Mongo mongo = new Mongo();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");

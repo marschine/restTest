@@ -15,7 +15,7 @@ public class HelloWorldService {
 	@GET
 	@Path("/live")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ProspectList getMsg() throws IOException {
+	public ProspectList getMsg() throws Exception {
 		return prospectService.getLiveProspects();
 	}
 

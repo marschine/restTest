@@ -4,12 +4,36 @@ import java.util.Arrays;
 
 public class Util {
 	public static String prepareThreadElements(String currentElement) {
-		String[] newString = currentElement.split("-",1);
+		String[] newString = currentElement.split("-", 1);
 		if (newString[0].equals(currentElement)) {
-			newString = currentElement.split("–",1);
+			newString = currentElement.split("–", 1);
 		}
 		String name = newString[0].split(",")[0].trim();
 		return name;
+	}
+
+	public static String[] prepareSelection(String currentElement)
+			throws Exception {
+		String[] selection = currentElement.split("-", 2);
+		String[] returnSelection = new String[3];
+		if (selection[0].contains("#")) {
+			String[] teamelement = selection[0].split(" ", 2);
+			String[] teamRaw = teamelement[1].trim().split("\\s");
+			returnSelection[0] = teamRaw[0];
+			String playerNameRaw = selection[1].split(">", 2)[1];
+			String playerName = playerNameRaw.split(",", 2)[0];
+			String firstNameRaw = playerName.split(" ", 2)[0];
+			String lastname = playerName.split(" ", 2)[1];
+			if (firstNameRaw.contains("*")) {
+				firstNameRaw = firstNameRaw.substring(1);
+			}
+			returnSelection[1] = firstNameRaw;
+			returnSelection[2] = lastname;
+			return returnSelection;
+		} else {
+			throw new Exception("Team or Player not parsable");
+		}
+
 	}
 
 	public static Prospect createProspect(String[] el) {

@@ -33,6 +33,8 @@ public class Prospect {
 
 	private String projRnd;
 
+	private String team = "None";
+
 	private boolean taken = false;
 
 	public Prospect() {
@@ -53,10 +55,11 @@ public class Prospect {
 		this.weight = weight;
 	}
 
-	public Prospect(String firstname, String lastname) {
+	public Prospect(String firstname, String lastname, String team) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.team = team;
 	}
 
 	public ObjectId getId() {
@@ -65,6 +68,14 @@ public class Prospect {
 
 	public void setId(ObjectId id) {
 		this.id = id;
+	}
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
 	}
 
 	public int getRank() {
