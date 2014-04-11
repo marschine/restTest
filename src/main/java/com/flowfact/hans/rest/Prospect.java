@@ -41,12 +41,12 @@ public class Prospect {
 		super();
 	}
 
-	public Prospect(int rank, String name, String pos, int posRank,
+	public Prospect(int rank, String firstname, String lastname, String pos, int posRank,
 			String school, String classYear, String height, String weight) {
 		super();
 		this.rank = rank;
-		this.firstname = name.split(" ")[0];
-		this.lastname = name.split(" ")[1];
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.pos = pos;
 		this.posRank = posRank;
 		this.school = school;

@@ -17,4 +17,15 @@ public class UtilTest extends TestCase {
 		assertEquals("Louis", returnedString[1]);
 		assertEquals("Nix III", returnedString[2]);
 	}
+
+	@Test
+	public void testCreateProspect() {
+		// test double last name
+		String[] testString = {"7", "Khalil Mack III", "OLB", "1", "Buffalo", "rSr", "6-3", "251", "1"};
+		Prospect returnedProspect = Util.createProspect(testString);
+		Prospect expectedProspect = new Prospect("Khalil", "Mack III", "Falcons");
+		assertEquals(expectedProspect.getFirstname(), returnedProspect.getFirstname());
+		assertEquals(expectedProspect.getLastname(), returnedProspect.getLastname());
+		assertEquals(expectedProspect.getTeam(), returnedProspect.getTeam());
+	}
 }
