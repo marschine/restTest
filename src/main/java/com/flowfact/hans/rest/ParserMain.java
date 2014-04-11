@@ -48,8 +48,10 @@ public class ParserMain {
 		// ProspectList prospectList2 = new ProspectList(prospectListRaw);
 		// System.out.println(prospectList2);
 
-//		Crawler crawler = new Crawler();
-//		System.out.println(crawler.getSelections().toString());
+		Crawler crawler = new Crawler();
+		ProspectService ps = new ProspectService();
+		System.out.println(ps.reset());
+		ps.setTaken();
 
 	}
 }

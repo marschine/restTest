@@ -33,10 +33,10 @@ public class HelloWorldService {
 		return prospectService.getOtc();
 	}
 
-//	@GET
-//	@Path("/reset")
-//	public void resetDB() throws IOException {
-//		prospectService.resetDB();
-//	}
+	@GET
+	@Path("/reset")
+	public void resetDB() throws IOException {
+		prospectService.reset();
+	}
 
 }
