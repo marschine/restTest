@@ -33,7 +33,7 @@ public class Prospect {
 
 	private String projRnd;
 
-	private String team = "None";
+	private String team = "";
 
 	private boolean taken = false;
 
