@@ -62,6 +62,14 @@ public class Prospect {
 		this.team = team;
 	}
 
+	public boolean isTaken() {
+		return taken;
+	}
+
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
+
 	public ObjectId getId() {
 		return id;
 	}
