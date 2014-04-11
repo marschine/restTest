@@ -26,6 +26,5 @@ public class UtilTest extends TestCase {
 		Prospect expectedProspect = new Prospect("Khalil", "Mack III", "Falcons");
 		assertEquals(expectedProspect.getFirstname(), returnedProspect.getFirstname());
 		assertEquals(expectedProspect.getLastname(), returnedProspect.getLastname());
-		assertEquals(expectedProspect.getTeam(), returnedProspect.getTeam());
 	}
 }
