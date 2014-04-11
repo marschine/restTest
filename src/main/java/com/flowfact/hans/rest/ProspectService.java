@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,15 +48,14 @@ public class ProspectService {
 			String firstname = prospect.getFirstname();
 			String lastname = prospect.getLastname();
 			String team = prospect.getTeam();
-			Query<Prospect> query = ds.createQuery(Prospect.class).field("lastname")
-					.equal(lastname);
+			Query<Prospect> query = ds.createQuery(Prospect.class)
+					.field("lastname").equal(lastname);
 			query.field("firstname").equal(firstname);
 			System.out.println(lastname);
-			UpdateOperations<Prospect> ops = ds.createUpdateOperations(Prospect.class)
-					.set("taken", true);
+			UpdateOperations<Prospect> ops = ds.createUpdateOperations(
+					Prospect.class).set("taken", true);
 			ds.update(query, ops);
-			ops = ds.createUpdateOperations(Prospect.class)
-					.set("team", team);
+			ops = ds.createUpdateOperations(Prospect.class).set("team", team);
 			ds.update(query, ops);
 		}
 		return true;
@@ -74,14 +74,22 @@ public class ProspectService {
 		URLConnection conn = url.openConnection();
 		BufferedReader readFile = new BufferedReader(new InputStreamReader(
 				conn.getInputStream()));
-//		ProspectList prospectList = new ProspectList();
+		// ProspectList prospectList = new ProspectList();
 		while ((currentLine = readFile.readLine()) != null) {
-			String changedLine = currentLine.replaceAll("\\t+", ";").trim();
-			String[] el = changedLine.split(";");
-			Prospect currentProspect = Util.createProspect(el);
-			ds.save(currentProspect);
+			saveCurrentLineProspect(currentLine);
 		}
 		return true;
+	}
+
+	public Prospect saveCurrentLineProspect(String currentLine) throws UnknownHostException {
+		Mongo mongo = new MongoClient();
+		Morphia morphia = new Morphia();
+		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+		String changedLine = currentLine.replaceAll("\\t+", ";").trim();
+		String[] el = changedLine.split(";");
+		Prospect currentProspect = Util.createProspect(el);
+		ds.save(currentProspect);
+		return currentProspect;
 	}
 
 	public ProspectList getNewLiveProspects() throws Exception {
@@ -94,7 +102,8 @@ public class ProspectService {
 				.equal(false);
 		ArrayList<Prospect> prospectListRaw = (ArrayList<Prospect>) query
 				.asList();
-		ProspectList prospectList = new ProspectList(prospectListRaw.subList(0, 100));
+		ProspectList prospectList = new ProspectList(prospectListRaw.subList(0,
+				100));
 		return prospectList;
 	}
 }
