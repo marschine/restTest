@@ -20,7 +20,7 @@ public class Util {
 			String[] teamRaw = teamelement[1].trim().split("\\s");
 			returnSelection[0] = teamRaw[0];
 			String playerNameRaw = selection[1].split(">", 2)[1];
-			String playerName = playerNameRaw.split(",", 2)[0];
+			String playerName = playerNameRaw.split(",", 2)[0].trim();
 			String firstNameRaw = playerName.split(" ", 2)[0];
 			String lastname = playerName.split(" ", 2)[1];
 			if (firstNameRaw.contains("*")) {
