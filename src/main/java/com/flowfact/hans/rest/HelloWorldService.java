@@ -10,12 +10,11 @@ import javax.ws.rs.core.MediaType;
 @Path("/hello")
 public class HelloWorldService {
 
-	ProspectService prospectService = new ProspectService();
-
 	@GET
 	@Path("/live")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProspectList getMsg() throws Exception {
+		ProspectService prospectService = new ProspectService();
 		return prospectService.getLiveProspects();
 	}
 
@@ -23,6 +22,7 @@ public class HelloWorldService {
 	@Path("/newlive")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProspectList getLive() throws Exception {
+		ProspectService prospectService = new ProspectService();
 		return prospectService.getNewLiveProspects();
 	}
 
@@ -30,12 +30,14 @@ public class HelloWorldService {
 	@Path("/otc")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getOtc() throws IOException {
+		ProspectService prospectService = new ProspectService();
 		return prospectService.getOtc();
 	}
 
 	@GET
 	@Path("/reset")
-	public void resetDB() throws IOException {
+	public void resetDB() throws Exception {
+		ProspectService prospectService = new ProspectService();
 		prospectService.reset();
 	}
 

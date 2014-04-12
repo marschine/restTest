@@ -19,12 +19,20 @@ import com.mongodb.MongoClient;
 
 public class ProspectService {
 
-	Crawler crawler = new Crawler();
+	Mongo mongo;
+	Morphia morphia;
+	Datastore ds;
+	Crawler crawler;
+
+	public ProspectService() throws UnknownHostException{
+		super();
+		this.mongo = new MongoClient();
+		this.morphia = new Morphia();
+		this.ds = morphia.createDatastore(mongo, "dbTest");
+		crawler = new Crawler();
+	}
 
 	public ProspectList getLiveProspects() throws Exception {
-		Mongo mongo = new MongoClient();
-		Morphia morphia = new Morphia();
-		Datastore ds = morphia.createDatastore(mongo, "dbTest");
 		this.setTaken();
 		// look for entries untaken
 		Query<Prospect> query = ds.createQuery(Prospect.class);
@@ -39,9 +47,7 @@ public class ProspectService {
 	}
 
 	public boolean setTaken() throws Exception {
-		Mongo mongo = new MongoClient();
-		Morphia morphia = new Morphia();
-		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+
 		Crawler crawler = new Crawler();
 		List<Prospect> draftedProspects = crawler.getSelections();
 		for (Prospect prospect : draftedProspects) {
@@ -61,13 +67,7 @@ public class ProspectService {
 		return true;
 	}
 
-	public boolean reset() throws IOException {
-		// return true only if success
-		Mongo mongo = new MongoClient();
-		Morphia morphia = new Morphia();
-		Datastore ds = morphia.createDatastore(mongo, "dbTest");
-
-		// create all objects
+	public boolean reset() throws Exception {
 		URL url = new URL(
 				"http://lvps87-230-26-65.dedicated.hosteurope.de/files/public-docs/prospects.txt");
 		String currentLine;
@@ -76,26 +76,23 @@ public class ProspectService {
 				conn.getInputStream()));
 		// ProspectList prospectList = new ProspectList();
 		while ((currentLine = readFile.readLine()) != null) {
-			saveCurrentLineProspect(currentLine);
+			saveCurrentLineProspect(currentLine, ds);
 		}
+		this.setTaken();
 		return true;
 	}
 
-	public Prospect saveCurrentLineProspect(String currentLine) throws UnknownHostException {
-		Mongo mongo = new MongoClient();
-		Morphia morphia = new Morphia();
-		Datastore ds = morphia.createDatastore(mongo, "dbTest");
+	public Prospect saveCurrentLineProspect(String currentLine, Datastore ds)
+			throws UnknownHostException {
 		String changedLine = currentLine.replaceAll("\\t+", ";").trim();
 		String[] el = changedLine.split(";");
 		Prospect currentProspect = Util.createProspect(el);
 		ds.save(currentProspect);
+		System.out.println(currentProspect);
 		return currentProspect;
 	}
 
 	public ProspectList getNewLiveProspects() throws Exception {
-		Mongo mongo = new MongoClient();
-		Morphia morphia = new Morphia();
-		Datastore ds = morphia.createDatastore(mongo, "dbTest");
 		this.setTaken();
 		// look for entries untaken
 		Query<Prospect> query = ds.createQuery(Prospect.class).field("taken")

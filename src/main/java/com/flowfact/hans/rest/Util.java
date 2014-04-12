@@ -54,10 +54,6 @@ public class Util {
 		String weight = el[7];
 		Prospect currentProspect = new Prospect(rank, firstname, lastname, pos, posRank,
 				school, year, height, weight);
-		if (el[8] != "--") {
-			String proj = el[8];
-			currentProspect.setProjRnd(proj);
-		}
 		return currentProspect;
 	}
 
