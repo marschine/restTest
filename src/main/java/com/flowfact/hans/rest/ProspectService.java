@@ -14,6 +14,9 @@ import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 
@@ -64,7 +67,7 @@ public class ProspectService {
 			ops = ds.createUpdateOperations(Prospect.class).set("team", team);
 			ds.update(query, ops);
 			ops = ds.createUpdateOperations(Prospect.class).set("overall", i);
-			ds.update(query, ops);
+			//ds.update(query, ops);
 		}	
 		return true;
 	}
@@ -77,6 +80,8 @@ public class ProspectService {
 		BufferedReader readFile = new BufferedReader(new InputStreamReader(
 				conn.getInputStream()));
 		// ProspectList prospectList = new ProspectList();
+		
+		ds.getCollection(Prospect.class).remove(new BasicDBObject());
 		while ((currentLine = readFile.readLine()) != null) {
 			saveCurrentLineProspect(currentLine, ds);
 		}

@@ -51,7 +51,7 @@ public class ParserMain {
 		Crawler crawler = new Crawler();
 		ProspectService ps = new ProspectService();
 		System.out.println(ps.reset());
-		ps.setTaken();
+		//ps.setTaken();
 
 	}
 }
