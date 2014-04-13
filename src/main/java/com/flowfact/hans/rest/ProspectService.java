@@ -32,7 +32,7 @@ public class ProspectService {
 		crawler = new Crawler();
 	}
 
-	public ProspectList getLiveProspects() throws Exception {
+	public ProspectList getProspects() throws Exception {
 		this.setTaken();
 		// look for entries untaken
 		Query<Prospect> query = ds.createQuery(Prospect.class);
@@ -47,23 +47,25 @@ public class ProspectService {
 	}
 
 	public boolean setTaken() throws Exception {
-
 		Crawler crawler = new Crawler();
 		List<Prospect> draftedProspects = crawler.getSelections();
+		int i = 0;
 		for (Prospect prospect : draftedProspects) {
+			i++;
 			String firstname = prospect.getFirstname();
 			String lastname = prospect.getLastname();
 			String team = prospect.getTeam();
 			Query<Prospect> query = ds.createQuery(Prospect.class)
 					.field("lastname").equal(lastname);
 			query.field("firstname").equal(firstname);
-			System.out.println(lastname);
 			UpdateOperations<Prospect> ops = ds.createUpdateOperations(
 					Prospect.class).set("taken", true);
 			ds.update(query, ops);
 			ops = ds.createUpdateOperations(Prospect.class).set("team", team);
 			ds.update(query, ops);
-		}
+			ops = ds.createUpdateOperations(Prospect.class).set("overall", i);
+			ds.update(query, ops);
+		}	
 		return true;
 	}
 
@@ -83,13 +85,15 @@ public class ProspectService {
 	}
 
 	public Prospect saveCurrentLineProspect(String currentLine, Datastore ds)
-			throws UnknownHostException {
+			throws Exception {
 		String changedLine = currentLine.replaceAll("\\t+", ";").trim();
 		String[] el = changedLine.split(";");
-		Prospect currentProspect = Util.createProspect(el);
-		ds.save(currentProspect);
-		System.out.println(currentProspect);
-		return currentProspect;
+		if (!el[0].equals("")){
+			Prospect currentProspect = Util.createProspect(el);
+			ds.save(currentProspect);
+			return currentProspect;
+		}
+		throw new Exception("Fehler beim speichern der Prospects!");
 	}
 
 	public ProspectList getNewLiveProspects() throws Exception {

@@ -14,7 +14,7 @@ import com.mongodb.MongoClient;
 public class ProspectServiceTest {
 
 	@Test
-	public void testSaveCurrentLine() throws UnknownHostException {
+	public void testSaveCurrentLine() throws Exception {
 		Mongo mongo = new MongoClient();
 		Morphia morphia = new Morphia();
 		Datastore ds = morphia.createDatastore(mongo, "dbTest");

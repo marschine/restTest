@@ -15,7 +15,7 @@ public class HelloWorldService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProspectList getMsg() throws Exception {
 		ProspectService prospectService = new ProspectService();
-		return prospectService.getLiveProspects();
+		return prospectService.getProspects();
 	}
 
 	@GET

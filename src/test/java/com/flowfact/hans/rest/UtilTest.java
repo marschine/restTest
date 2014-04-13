@@ -19,7 +19,7 @@ public class UtilTest extends TestCase {
 	}
 
 	@Test
-	public void testCreateProspect() {
+	public void testCreateProspect() throws Exception {
 		// test double last name
 		String[] testString = {"7", "Khalil Mack III", "OLB", "1", "Buffalo", "rSr", "6-3", "251", "1"};
 		Prospect returnedProspect = Util.createProspect(testString);

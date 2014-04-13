@@ -35,6 +35,8 @@ public class Prospect {
 
 	private String team = "";
 
+	private int overall;
+
 	private boolean taken = false;
 
 	public Prospect() {
@@ -60,6 +62,14 @@ public class Prospect {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.team = team;
+	}
+
+	public int getOverall() {
+		return overall;
+	}
+
+	public void setOverall(int overall) {
+		this.overall = overall;
 	}
 
 	public boolean isTaken() {
