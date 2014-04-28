@@ -35,7 +35,7 @@ public class Prospect {
 
 	private String team = "";
 
-	private int overall;
+	private int overall = 999;
 
 	private boolean taken = false;
 

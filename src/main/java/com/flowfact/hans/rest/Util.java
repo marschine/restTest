@@ -15,6 +15,7 @@ public class Util {
 		String[] selection = currentElement.split("-", 2);
 		String[] returnSelection = new String[3];
 		if (selection[0].contains("#")) {
+			System.out.println(selection[0]);
 			String[] teamelement = selection[0].split(" ", 2);
 			String[] teamRaw = teamelement[1].trim().split("\\s");
 			returnSelection[0] = teamRaw[0];
@@ -31,7 +32,6 @@ public class Util {
 		} else {
 			throw new Exception("Team or Player not parsable");
 		}
-
 	}
 
 	public static Prospect createProspect(String[] el) throws Exception {

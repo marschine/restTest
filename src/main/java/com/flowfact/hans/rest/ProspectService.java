@@ -26,6 +26,7 @@ public class ProspectService {
 	Morphia morphia;
 	Datastore ds;
 	Crawler crawler;
+	Crawlerer crawler2;
 
 	public ProspectService() throws UnknownHostException{
 		super();
@@ -33,6 +34,7 @@ public class ProspectService {
 		this.morphia = new Morphia();
 		this.ds = morphia.createDatastore(mongo, "dbTest");
 		crawler = new Crawler();
+		crawler2 = new Crawlerer();
 	}
 
 	public ProspectList getProspects() throws Exception {
@@ -46,7 +48,7 @@ public class ProspectService {
 	}
 
 	public String getOtc() throws IOException {
-		return crawler.getOTC();
+		return crawler2.getOTC();
 	}
 
 	public boolean setTaken() throws Exception {
@@ -67,7 +69,25 @@ public class ProspectService {
 			ops = ds.createUpdateOperations(Prospect.class).set("team", team);
 			ds.update(query, ops);
 			ops = ds.createUpdateOperations(Prospect.class).set("overall", i);
-			//ds.update(query, ops);
+			ds.update(query, ops);
+		}	
+		Crawlerer crawler2 = new Crawlerer();
+		List<Prospect> draftedProspects2 = crawler2.getSelections();
+		for (Prospect prospect2 : draftedProspects2) {
+			i++;
+			String firstname2 = prospect2.getFirstname();
+			String lastname2 = prospect2.getLastname();
+			String team2 = prospect2.getTeam();
+			Query<Prospect> query = ds.createQuery(Prospect.class)
+					.field("lastname").equal(lastname2);
+			query.field("firstname").equal(firstname2);
+			UpdateOperations<Prospect> ops = ds.createUpdateOperations(
+					Prospect.class).set("taken", true);
+			ds.update(query, ops);
+			ops = ds.createUpdateOperations(Prospect.class).set("team", team2);
+			ds.update(query, ops);
+			ops = ds.createUpdateOperations(Prospect.class).set("overall", i);
+			ds.update(query, ops);
 		}	
 		return true;
 	}
